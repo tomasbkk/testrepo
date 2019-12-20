@@ -3,3 +3,4 @@ modified in master
 feature01 mod
 hello
 
+fixing issue #3
