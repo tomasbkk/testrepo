@@ -9,10 +9,23 @@ on:
     inputs:
       buildType:
         type: choice
-        description: Select release only for software to be released.
+        description: 'Build type'
         options: 
-        - Nighly
+        - Nightly
         - Release
+      versionMajor:
+        type: string
+        description: 'Version major'
+        default: '1'
+      versionMinor:
+        type: string
+        description: 'Version minor'
+        default: '0'
+      versionPatch:
+        type: string
+        description: 'Version patch'
+        default: '0'
+        
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -37,10 +50,16 @@ jobs:
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
      
+    - name: Read version information
+      if: ${{ env.RUN_ALL_STEPS == 1 }}
+      id: versionInfo
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ${{ github.workspace }}\TestApp\version.txt
+        
     - name: Create Tag
       uses: negz/create-tag@v1
       with:
-        version: 1.0.0
-        message: version 1.0.0
+        version: ${{ steps.versionInfo.outputs.content }}
         token: ${{ secrets.GITHUB_TOKEN }}
         
