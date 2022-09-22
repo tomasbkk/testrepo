@@ -15,7 +15,7 @@ on:
         - Release
       versionMajor:
         type: string
-        description: 'Version major'
+        description: 'Version used only for release build type.\nVersion major'
         default: '1'
       versionMinor:
         type: string
@@ -66,5 +66,5 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         tag: ${{ steps.versionInfo.outputs.content }}
-        artifacts: "TestApp/build/Release/TestApp.exe"
+        artifacts: "${{ github.workspace }}/TestApp/build/Release/TestApp.exe"
         token: ${{ secrets.GITHUB_TOKEN }}
