@@ -38,7 +38,7 @@ jobs:
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
      
     - name: Create Tag
-      uses: negz/create-tag@v0.1.0
+      uses: negz/create-tag@v1
       with:
         version: 1.0.0
         message: version 1.0.0
