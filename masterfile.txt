@@ -1,3 +1,0 @@
-asdf
-
-I created a new feature for this project.
