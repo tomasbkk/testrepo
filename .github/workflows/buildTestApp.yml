@@ -67,4 +67,4 @@ jobs:
       with:
         tag: ${{ steps.versionInfo.outputs.content }}
         artifacts: "TestApp/build/Release/TestApp.exe"
-        token: ${{ secrets.YOUR_GITHUB_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
