@@ -5,6 +5,14 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
+    inputs:
+      buildType:
+        type: choice
+        description: Select release only for software to be released.
+        options: 
+        - Nighly
+        - Release
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
