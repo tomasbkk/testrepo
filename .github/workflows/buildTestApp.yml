@@ -66,5 +66,5 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         tag: ${{ steps.versionInfo.outputs.content }}
-        artifacts: "${{ github.workspace }}/TestApp/build/Release/TestApp.exe"
+        artifacts: "${{ github.workspace }}\\TestApp\\build\\Release\\TestApp.exe"
         token: ${{ secrets.GITHUB_TOKEN }}
