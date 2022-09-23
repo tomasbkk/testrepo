@@ -72,7 +72,7 @@ jobs:
     - name: Upload Release Asset
       id: uploadrelease-asset
       if: ${{ github.event.inputs.buildType == 'Pre-release' || github.event.inputs.buildType == 'Release' }}
-      uses: sekwah41/upload-release-assets@v1
+      uses: sekwah41/upload-release-assets@v1.1.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
