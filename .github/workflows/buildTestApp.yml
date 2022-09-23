@@ -56,12 +56,20 @@ jobs:
       uses: juliangruber/read-file-action@v1
       with:
         path: ${{ github.workspace }}\TestApp\version.txt
-      
+        
+    - name: Trim version
+      id: versionTrim
+      uses: frabert/replace-string-action@v2.0
+      with:
+        pattern: '\\s+'
+        string: ${{ steps.versionInfo.outputs.content }}
+        replace-with: ''
+        
     - name: Zip build outputs
       uses: thedoctor0/zip-release@main
       with:
         path: '${{ github.workspace }}\build\Release\*'
-        filename: 'TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip'
+        filename: 'TestApp${{ steps.versionTrim.replaced }}.${{ github.run_number }}.zip'
   
     - name: Create a GitHub release
       id: create_release
@@ -73,17 +81,4 @@ jobs:
         prerelease: ${{ contains(github.event.inputs.buildType, 'Pre-release') }}
         title: Release ${{ steps.tag_version.outputs.new_tag }}
         files: 'TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip'         
-
-              
-    - name: Upload Release Asset
-      id: uploadrelease-asset
-      if: ${{ github.event.inputs.buildType == 'Pre-release' || github.event.inputs.buildType == 'Release' }}
-      uses: sekwah41/upload-release-assets@v1.1.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: '${{ github.workspace }}\\TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip'
-        asset_name: 'TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip'
-        asset_content_type: application/zip
 
