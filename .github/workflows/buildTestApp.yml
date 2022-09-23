@@ -64,6 +64,7 @@ jobs:
         filename: 'TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip'
   
     - name: Create a GitHub release
+      id: create_release
       uses: "marvinpinto/action-automatic-releases@v1.2.1"
       if: ${{ github.event.inputs.buildType == 'Pre-release' || github.event.inputs.buildType == 'Release' }}
       with:
