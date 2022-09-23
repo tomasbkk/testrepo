@@ -55,16 +55,15 @@ jobs:
       uses: juliangruber/read-file-action@v1
       with:
         path: ${{ github.workspace }}\TestApp\version.txt
-        
-    - name: Create Tag
-      uses: negz/create-tag@v1
+                
+    - name: Create a GitHub release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        version: ${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}
-        message: 'Release build'
-        token: ${{ secrets.GITHUB_TOKEN }}
-        
-    - uses: ncipollo/release-action@v1
-      with:
-        tag: ${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}
-        artifacts: "${{ github.workspace }}\\build\\Release\\TestApp.exe"
-        token: ${{ secrets.GITHUB_TOKEN }}
+        custom_tag: ${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}
+        tag_name: ${{ steps.tag_version.outputs.new_tag }}
+        release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+        body: ${{ steps.tag_version.outputs.changelog }}   
+          
+
