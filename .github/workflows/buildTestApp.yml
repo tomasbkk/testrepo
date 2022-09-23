@@ -9,13 +9,13 @@ on:
     inputs:
       buildType:
         type: choice
-        description: 'Build type'
+        description: 'Build Type'
         options: 
-        - Nightly
+        - Dev
         - Release
       versionMajor:
         type: string
-        description: 'Version used only for release build type.\nVersion major'
+        description: 'Version used only for Release Build Type. Version major'
         default: '1'
       versionMinor:
         type: string
@@ -48,7 +48,7 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config Release
+      run: cmake --build ${{github.workspace}}/build --config ${{ env.BUILD_TYPE }}
      
     - name: Read version information
       id: versionInfo
@@ -59,12 +59,12 @@ jobs:
     - name: Create Tag
       uses: negz/create-tag@v1
       with:
-        version: ${{ steps.versionInfo.outputs.content }}
-        message: 'Release version'
+        version: ${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}
+        message: 'Release build'
         token: ${{ secrets.GITHUB_TOKEN }}
         
     - uses: ncipollo/release-action@v1
       with:
-        tag: ${{ steps.versionInfo.outputs.content }}
+        tag: ${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}
         artifacts: "${{ github.workspace }}\\build\\Release\\TestApp.exe"
         token: ${{ secrets.GITHUB_TOKEN }}
