@@ -56,25 +56,24 @@ jobs:
       uses: juliangruber/read-file-action@v1
       with:
         path: ${{ github.workspace }}\TestApp\version.txt
-                
-    - name: Create a GitHub release
-      id: create_release
-      if: ${{ github.event.inputs.buildType == 'Pre-release' || github.event.inputs.buildType == 'Release' }}
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}
-        release_name: Release ${{ steps.tag_version.outputs.new_tag }}
-        body: ${{ steps.tag_version.outputs.changelog }}
-        prerelease: ${{ contains(github.event.inputs.buildType, 'Pre-release') }}
-          
+      
     - name: Zip build outputs
       uses: thedoctor0/zip-release@main
       with:
         path: '${{ github.workspace }}\build\Release\*'
         filename: 'TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip'
-            
+  
+    - name: Create a GitHub release
+      uses: "marvinpinto/action-automatic-releases@v1.2.1"
+      if: ${{ github.event.inputs.buildType == 'Pre-release' || github.event.inputs.buildType == 'Release' }}
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        automatic_release_tag: "${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}"
+        prerelease: ${{ contains(github.event.inputs.buildType, 'Pre-release') }}
+        title: Release ${{ steps.tag_version.outputs.new_tag }}
+        files: 'TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip'         
+
+              
     - name: Upload Release Asset
       id: uploadrelease-asset
       if: ${{ github.event.inputs.buildType == 'Pre-release' || github.event.inputs.buildType == 'Release' }}
