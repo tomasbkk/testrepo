@@ -69,6 +69,7 @@ jobs:
           
     - name: Upload Release Asset
       id: uploadrelease-asset
+      if: github.event.inputs.buildType == 'Release'
       uses: sekwah41/upload-release-assets@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
