@@ -69,9 +69,10 @@ jobs:
         body: ${{ steps.tag_version.outputs.changelog }}
         prerelease: ${{ contains(github.event.inputs.buildType, 'Pre-release') }}
           
-    - uses: vimtor/action-zip@v1
+    - name: Zip build outputs
+      uses: vimtor/action-zip@v1
       with:
-        files: '${{ github.workspace }}\build\Release\*.*'
+        files: '${{ github.workspace }}\build\Release\TestApp.exe'
         dest: 'TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip'
         
     - name: Upload Release Asset
