@@ -71,7 +71,7 @@ jobs:
           
     - uses: vimtor/action-zip@v1
       with:
-        files: '${{ github.workspace }}/build/Release/'
+        files: '${{ github.workspace }}\build\Release\*.*'
         dest: 'TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip'
         
     - name: Upload Release Asset
