@@ -12,6 +12,7 @@ on:
         description: 'Build Type'
         options: 
         - Dev
+        - Pre-release
         - Release
       versionMajor:
         type: string
@@ -58,18 +59,19 @@ jobs:
                 
     - name: Create a GitHub release
       id: create_release
-      if: github.event.inputs.buildType == 'Release'
+      if: github.event.inputs.buildType != 'Dev'
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}
         release_name: Release ${{ steps.tag_version.outputs.new_tag }}
-        body: ${{ steps.tag_version.outputs.changelog }}   
+        body: ${{ steps.tag_version.outputs.changelog }}
+        prerelease: github.event.inputs.buildType == 'Pre-release'
           
     - name: Upload Release Asset
       id: uploadrelease-asset
-      if: github.event.inputs.buildType == 'Release'
+      if: github.event.inputs.buildType != 'Dev'
       uses: sekwah41/upload-release-assets@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
