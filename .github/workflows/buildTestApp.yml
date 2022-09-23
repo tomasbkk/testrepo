@@ -68,7 +68,7 @@ jobs:
         tag_name: ${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}
         release_name: Release ${{ steps.tag_version.outputs.new_tag }}
         body: ${{ steps.tag_version.outputs.changelog }}
-        prerelease: contains(github.event.inputs.buildType, 'Pre-release')
+        prerelease: ${{ contains(github.event.inputs.buildType, 'Pre-release') }}
           
     - name: Upload Release Asset
       id: uploadrelease-asset
