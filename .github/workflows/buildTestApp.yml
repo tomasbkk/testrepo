@@ -70,11 +70,11 @@ jobs:
         prerelease: ${{ contains(github.event.inputs.buildType, 'Pre-release') }}
           
     - name: Zip build outputs
-      uses: vimtor/action-zip@v1
+      uses: thedoctor0/zip-release@main
       with:
-        files: 'build\Release\*'
-        dest: 'TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip'
-        
+        path: '${{ github.workspace }}\build\Release\*'
+        filename: 'TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip'
+            
     - name: Upload Release Asset
       id: uploadrelease-asset
       if: ${{ github.event.inputs.buildType == 'Pre-release' || github.event.inputs.buildType == 'Release' }}
