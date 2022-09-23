@@ -69,6 +69,11 @@ jobs:
         body: ${{ steps.tag_version.outputs.changelog }}
         prerelease: ${{ contains(github.event.inputs.buildType, 'Pre-release') }}
           
+    - uses: vimtor/action-zip@v1
+      with:
+        files: /build/Debug/*
+        dest: TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip
+        
     - name: Upload Release Asset
       id: uploadrelease-asset
       if: ${{ github.event.inputs.buildType == 'Pre-release' || github.event.inputs.buildType == 'Release' }}
@@ -77,7 +82,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: '${{ github.workspace }}\\build\\Debug\\*'
+        asset_path: '${{ github.workspace }}\\TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip'
         asset_name: 'TestApp${{ steps.versionInfo.outputs.content }}.${{ github.run_number }}.zip'
         asset_content_type: application/zip
 
