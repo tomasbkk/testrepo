@@ -10,6 +10,7 @@ on:
       buildType:
         type: choice
         description: 'Build Type'
+        default: Dev
         options: 
         - Dev
         - Pre-release
