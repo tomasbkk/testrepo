@@ -65,6 +65,11 @@ jobs:
         string: ${{ steps.versionInfo.outputs.content }}
         replace-with: ''
         
+    - name: Set env
+      run: echo "GITHUB_BUILD_NUMBER=${{ steps.versionTrim.outputs.replaced }}" >> $GITHUB_ENV
+    - name: Test
+      run: echo $GITHUB_BUILD_NUMBER
+      
     - name: Zip build outputs
       uses: thedoctor0/zip-release@main
       with:
