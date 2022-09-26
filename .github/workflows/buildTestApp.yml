@@ -31,11 +31,16 @@ on:
         type: string
         description: 'Version patch'
         default: '0'
+      versionRev:
+        type: string
+        description: 'Version rev'
+        default: '0'
         
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  GITHUB_BUILD_NUMBER: ''
 
 jobs:
   build:
