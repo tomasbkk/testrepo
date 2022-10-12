@@ -51,7 +51,7 @@ jobs:
 
     - name: Get timestamp
       id: time
-      uses: tomasbkk/get-time-action@test2
+      uses: tomasbkk/get-time-action@test3
       with:
         format: 'YYYY.MM.DD-HH.mm.ss'
         
