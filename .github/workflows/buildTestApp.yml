@@ -51,7 +51,7 @@ jobs:
 
     - name: Set dev build details
       run: |
-        echo "BUILD_DETAILS=$(_dev_${{ github.run_number }})" >> $GITHUB_ENV
+        echo "BUILD_DETAILS=_dev_${{ github.run_number }}" >> $GITHUB_ENV
         
     - name: Configure CMake
       run: cmake -G "Visual Studio 16 2019" -S ${{ github.workspace }}/TestApp -B ${{github.workspace}}/build
