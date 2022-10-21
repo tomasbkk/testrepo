@@ -47,6 +47,22 @@ jobs:
     runs-on: windows-2019
 
     steps:
+    
+    - name: Install Qt 5.15.0
+      if: ${{ env.RUN_ALL_STEPS == 1 }}
+      uses: jurplel/install-qt-action@v3
+      with: 
+        version: '5.15.0'
+        arch: 'win64_msvc2019_64'
+        cache: 'true'
+        tools: 'tools_openssl_x64'
+       
+    - name: Copy openSSL test
+      shell: cmd
+      run: |
+        echo ${{ $RUNNER_WORKSPACE }}
+        xcopy "${{ github.workspace }}\imsonicSOF" "${{ github.workspace }}\build\bin\release\imsonicSOF" /Q /C /I /Y /S       
+        
     - uses: actions/checkout@v3
 
     - name: Get timestamp
