@@ -60,7 +60,7 @@ jobs:
       shell: cmd
       run: |
         echo ${{ env.IQTA_TOOLS }}
-        cd ${{ env.IQTA_TOOLS }}}\\OpenSSL\Win_x64\bin
+        cd ${{ env.IQTA_TOOLS }}\\OpenSSL\Win_x64\bin
         dir
         xcopy "${{ env.IQTA_TOOLS }}\\OpenSSL\Win_x64\bin" "${{ github.workspace }}\build\bin\release" /Q /C /I /Y /S       
         
