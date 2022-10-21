@@ -59,7 +59,9 @@ jobs:
     - name: Copy openSSL test
       shell: cmd
       run: |
-        echo ${{ github.workspace }}
+        echo ${{ IQTA_TOOLS }}
+        cd ${{ IQTA_TOOLS }}
+        dir
         xcopy "${{ github.workspace }}\imsonicSOF" "${{ github.workspace }}\build\bin\release\imsonicSOF" /Q /C /I /Y /S       
         
     - uses: actions/checkout@v3
