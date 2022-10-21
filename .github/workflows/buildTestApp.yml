@@ -60,9 +60,9 @@ jobs:
       shell: cmd
       run: |
         echo ${{ env.IQTA_TOOLS }}
-        cd ${{ env.IQTA_TOOLS }}
+        cd ${{ env.IQTA_TOOLS }}}\\OpenSSL\Win_x64\bin
         dir
-        xcopy "${{ github.workspace }}\imsonicSOF" "${{ github.workspace }}\build\bin\release\imsonicSOF" /Q /C /I /Y /S       
+        xcopy "${{ env.IQTA_TOOLS }}\\OpenSSL\Win_x64\bin" "${{ github.workspace }}\build\bin\release" /Q /C /I /Y /S       
         
     - uses: actions/checkout@v3
 
