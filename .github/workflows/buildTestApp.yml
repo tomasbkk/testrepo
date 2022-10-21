@@ -60,7 +60,6 @@ jobs:
     - name: Copy openSSL test
       shell: cmd
       run: |
-        echo ${{ RUNNER_WORKSPACE }}
         dir 
         xcopy "${{ github.workspace }}\imsonicSOF" "${{ github.workspace }}\build\bin\release\imsonicSOF" /Q /C /I /Y /S       
         
