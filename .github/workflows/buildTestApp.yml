@@ -60,7 +60,7 @@ jobs:
       shell: cmd
       run: |
         echo ${{ env.IQTA_TOOLS }}
-        cd ${{ IQTA_TOOLS }}
+        cd ${{ env.IQTA_TOOLS }}
         dir
         xcopy "${{ github.workspace }}\imsonicSOF" "${{ github.workspace }}\build\bin\release\imsonicSOF" /Q /C /I /Y /S       
         
