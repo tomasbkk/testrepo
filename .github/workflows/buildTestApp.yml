@@ -122,5 +122,5 @@ jobs:
         prerelease: ${{ contains(github.event.inputs.buildType, 'Pre-release') }}
         title: Release ${{ steps.tag_version.outputs.new_tag }}
         files: |
-          '${{ github.workspace }}\*.zip'
+          *.zip
 
