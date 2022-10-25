@@ -105,6 +105,13 @@ jobs:
         path: '${{ github.workspace }}\build\Release\*'
         filename: 'Symbols${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip'
   
+    - name: Show files
+      shell: cmd
+      run: |
+        dir
+        cd ${{ github.workspace }}
+        dir
+  
     - name: Create a GitHub release
       id: create_release
       uses: "marvinpinto/action-automatic-releases@v1.2.1"
