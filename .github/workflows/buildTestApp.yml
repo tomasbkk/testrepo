@@ -122,6 +122,6 @@ jobs:
         prerelease: ${{ contains(github.event.inputs.buildType, 'Pre-release') }}
         title: Release ${{ steps.tag_version.outputs.new_tag }}
         files: |
-          '${{ github.workspace }}\TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip'         
-          '${{ github.workspace }}\Symbols${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip'         
+          '${{ github.workspace }}\TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip'
+          '${{ github.workspace }}\Symbols${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip'
 
