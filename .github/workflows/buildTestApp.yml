@@ -54,15 +54,7 @@ jobs:
         version: '5.15.0'
         arch: 'win64_msvc2019_64'
         cache: 'true'
-        tools: 'tools_openssl_x64'
-       
-    - name: Copy openSSL test
-      shell: cmd
-      run: |
-        echo ${{ env.IQTA_TOOLS }}
-        cd ${{ env.IQTA_TOOLS }}\\OpenSSL\Win_x64\bin
-        dir
-        xcopy "${{ env.IQTA_TOOLS }}\\OpenSSL\Win_x64\bin" "${{ github.workspace }}\build\bin\release" /Q /C /I /Y /S       
+        tools: 'tools_openssl_x64'     
         
     - uses: actions/checkout@v3
 
@@ -93,13 +85,13 @@ jobs:
         string: ${{ steps.versionInfo.outputs.content }}
         replace-with: ''
        
-    - name: Set env
-      uses: allenevans/set-env@v2.0.0
-      with:
-        GITHUB_BUILD_NUMBER: '${{ steps.versionTrim.outputs.replaced }}'       
-
-    - name: Test
-      run: echo $GITHUB_BUILD_NUMBER
+    - name: Copy openSSL test
+      shell: cmd
+      run: |
+        echo ${{ env.IQTA_TOOLS }}
+        cd ${{ env.IQTA_TOOLS }}\\OpenSSL\Win_x64\bin
+        dir
+        xcopy "${{ env.IQTA_TOOLS }}\\OpenSSL\Win_x64\bin" "${{ github.workspace }}\build\bin\release" /Q /C /I /Y /S  
       
     - name: Zip build outputs
       uses: thedoctor0/zip-release@main
