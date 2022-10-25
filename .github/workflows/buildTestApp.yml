@@ -99,7 +99,7 @@ jobs:
         path: '${{ github.workspace }}\build\Release\*'
         filename: 'TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip'
   
-      - name: Zip symbols
+    - name: Zip symbols
       uses: thedoctor0/zip-release@main
       with:
         path: '${{ github.workspace }}\build\Release\*'
