@@ -99,6 +99,12 @@ jobs:
         path: '${{ github.workspace }}\build\Release\*'
         filename: 'TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip'
   
+      - name: Zip symbols
+      uses: thedoctor0/zip-release@main
+      with:
+        path: '${{ github.workspace }}\build\Release\*'
+        filename: 'Symbols${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip'
+  
     - name: Create a GitHub release
       id: create_release
       uses: "marvinpinto/action-automatic-releases@v1.2.1"
@@ -108,5 +114,7 @@ jobs:
         automatic_release_tag: "${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}"
         prerelease: ${{ contains(github.event.inputs.buildType, 'Pre-release') }}
         title: Release ${{ steps.tag_version.outputs.new_tag }}
-        files: 'TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip'         
+        files: |
+          'TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip'         
+          'Symbols${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip'         
 
