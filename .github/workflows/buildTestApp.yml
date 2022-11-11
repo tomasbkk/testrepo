@@ -52,6 +52,7 @@ jobs:
       shell: cmd
       # Build your program with the given configuration
       run: |
+        cd\
         dir 
         
     - uses: actions/checkout@v3
