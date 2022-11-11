@@ -52,12 +52,11 @@ jobs:
       shell: cmd
       # Build your program with the given configuration
       run: |
-        cd a
+        cd \
         dir
-        c:
+        resizepartition.ps1
         dir
-        
-        
+       
     - uses: actions/checkout@v3
       if: false
 
