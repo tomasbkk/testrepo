@@ -48,6 +48,9 @@ jobs:
 
     steps:
     
+    - name: Free Disk Space
+      uses: ShubhamTatvamasi/free-disk-space-action@master
+      
     - name: get directory
       # Build your program with the given configuration
       run: |
