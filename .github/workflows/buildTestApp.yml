@@ -50,7 +50,9 @@ jobs:
     
     - name: get directory
       # Build your program with the given configuration
-      run: dir 
+      run: |
+        echo on
+        dir 
         
     - uses: actions/checkout@v3
 
