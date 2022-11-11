@@ -54,9 +54,14 @@ jobs:
       run: |
         cd \
         dir
-        resizepartition.ps1
-        dir
        
+    - name: Clone
+      uses: GuillaumeFalourd/clone-github-repo-action@v2
+      with:
+        owner: 'tomasbkk'
+        repository: 'ImSonicZePu/dcmtk-3.6.5'
+        access-token: ${{ secrets.GITHUB_TOKEN }}
+     
     - uses: actions/checkout@v3
       if: false
 
