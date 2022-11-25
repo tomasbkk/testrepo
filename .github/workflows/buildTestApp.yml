@@ -87,7 +87,7 @@ jobs:
       uses: actions/upload-artifact@v3.1.0
       with:
         name: Mt.TestApp${{ steps.versionTrim.outputs.replaced }}
-        path: ${{ github.workspace }}/installer_output
+        path: ${{ github.workspace }}\build\Release
         
     - name: Zip build outputs
       if: false
