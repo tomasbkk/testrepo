@@ -47,23 +47,8 @@ jobs:
     runs-on: windows-2019
 
     steps:
-      
-    - name: get directory
-      shell: cmd
-      # Build your program with the given configuration
-      run: |
-        cd \
-        dir
-       
-    - name: Clone
-      uses: GuillaumeFalourd/clone-github-repo-action@v2
-      with:
-        owner: 'tomasbkk'
-        repository: 'ImSonicZePu/dcmtk-3.6.5'
-        access-token: ${{ secrets.GITHUB_TOKEN }}
      
     - uses: actions/checkout@v3
-      if: false
 
     - name: Get timestamp
       if: false
@@ -73,11 +58,11 @@ jobs:
         format: 'YYYY.MM.DD-HH.mm.ss'
         
     - name: Configure CMake
-      if: false
+      if: true
       run: cmake -G "Visual Studio 16 2019" -S ${{ github.workspace }}/TestApp -B ${{github.workspace}}/build
 
     - name: Build
-      if: false
+      if: true
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{ env.BUILD_TYPE }}
      
@@ -96,7 +81,14 @@ jobs:
         pattern: '\\s+'
         string: ${{ steps.versionInfo.outputs.content }}
         replace-with: ''
-      
+        
+    - name: Create build artifact
+      if: true
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: Mt.TestApp${{ steps.versionTrim.outputs.replaced }}
+        path: ${{ github.workspace }}/installer_output
+        
     - name: Zip build outputs
       if: false
       uses: thedoctor0/zip-release@main
@@ -110,14 +102,6 @@ jobs:
       with:
         path: '${{ github.workspace }}\build\Release\*'
         filename: 'Symbols${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip'
-  
-    - name: Show files
-      if: false
-      shell: cmd
-      run: |
-        dir
-        cd ${{ github.workspace }}
-        dir
   
     - name: Create a GitHub release
       id: create_release
