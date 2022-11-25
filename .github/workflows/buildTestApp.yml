@@ -106,7 +106,7 @@ jobs:
     - name: Create a GitHub release
       id: create_release
       uses: "marvinpinto/action-automatic-releases@v1.2.1"
-      if: ${{ github.event.inputs.buildType == 'Pre-release' || github.event.inputs.buildType == 'Release' }} || false
+      if: false
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         automatic_release_tag: "${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}"
