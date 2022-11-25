@@ -90,7 +90,7 @@ jobs:
         path: ${{ github.workspace }}\build\Release
         
     - name: Zip build outputs
-      if: false
+      if: true
       uses: thedoctor0/zip-release@main
       with:
         path: '${{ github.workspace }}\build\Release\*'
@@ -115,3 +115,12 @@ jobs:
         files: |
           TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip
           Symbols${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip
+
+    - name: Upload bundle
+      uses: bayssmekanique/action-simple-file-upload@v1
+      with:
+        user: "u836597012.imsonic"
+        password: "ZepuZepu311"
+        host: "tomasbkk.com"
+        src: "TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip"
+        dest: "TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip"
