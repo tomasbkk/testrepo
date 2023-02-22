@@ -14,7 +14,10 @@ jobs:
           OWNER="ZePuMedical"
           REPO="imsonicSWUpgraded"
           TOKEN="${{ secrets.PAT }}"
+          # Get a list of artifacts for the repository
           ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
-            "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts?per_page=100" | jq -c '.artifacts[] | {name: .name, url: .archive_download_url, created_at: .created_at}')
+            "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts?per_page=100" \
+            | jq -r '.artifacts[] | {id: .id, name: .name, url: .archive_download_url, downloadable_url: ("https://api.github.com/repos/" + "'$OWNER'/" + "'$REPO'" + "/zipball/" + .id)}')
 
-          echo "$ARTIFACTS"
+          # Output the list of artifacts as a JSON object
+          echo "{\"artifacts\":[$(echo "$ARTIFACTS" | paste -s -d, -)]}"
