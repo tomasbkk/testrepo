@@ -4,8 +4,13 @@ jobs:
   get-artifacts:
     runs-on: ubuntu-latest
     steps:
-    - id: result
-      uses: MichaelMelena/list-artifacts@v1
-      with:
-        GITHUB_TOKEN: ${{ secrets.pat }}
-        repository: ZePuMedical/imsonicSWUpgraded
+      - name: List Artifacts
+        run: |
+          OWNER="ZePuMedical"
+          REPO="imsonicSWUpgraded"
+          RUN_ID="${{ github.event.workflow_run.id }}"
+          TOKEN="${{ secrets.PAT }}"
+          ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
+            "https://api.github.com/repos/${OWNER}/${REPO}/actions/runs/${RUN_ID}/artifacts" \
+            | jq -r '.artifacts[].name')
+          echo "Artifacts: $ARTIFACTS"
