@@ -1,20 +1,17 @@
 name: Artifact selection
 on:
-  workflow_run:
-    workflows: ["<your workflow>"]
-    types:
-      - completed
+  workflow_dispatch:
+    inputs:
+      artifact:
+        description: "Select an artifact to use"
+        required: true
+        options: ${{ fromJson(steps.list-artifacts.outputs.artifacts) }}
 
 jobs:
-  list-all-artifacts:
+  my-job:
     runs-on: ubuntu-latest
-    outputs:
-      artifacts: ${{ steps.list-artifacts.outputs.artifacts }}
     steps:
-      - name: List Artifacts
-        id: list-artifacts
+      - name: Use selected artifact
         run: |
-          OWNER="ZePuMedical"
-          REPO="imsonicSWUpgraded"
-          TOKEN="${{ secrets.PAT }}"
-          curl -sH "Authorization: token ${TOKEN}"
+          echo "Selected artifact: ${{ github.event.inputs.artifact }}"
+          # Use the selected artifact in your job
