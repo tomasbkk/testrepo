@@ -1,7 +1,10 @@
-name: Advance get artifacts
-on: [workflow_dispatch]
+name: Update Artifacts List
+on:
+  repository_dispatch:
+    types: [ "update-artifacts" ]
+
 jobs:
-  get-artifacts:
+  update-artifacts:
     runs-on: ubuntu-latest
     steps:
       - name: List Artifacts
@@ -13,7 +16,12 @@ jobs:
           curl -sH "Authorization: token ${TOKEN}" \
             "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts?per_page=100" \
             -o artifacts.json
+
           ARTIFACTS=$(jq -c '[.artifacts[] | {name: .name, id: .id}]' artifacts.json)
-          echo "ARTIFACTS=$ARTIFACTS" >> $GITHUB_ENV
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo "$ARTIFACTS" > artifacts-list.json
+
+          curl -X POST \
+            -H "Accept: application/vnd.github.everest-preview+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -d '{"event_type": "update-artifacts"}' \
+            "https://api.github.com/repos/${OWNER}/${REPO}/dispatches"
