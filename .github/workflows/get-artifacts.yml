@@ -2,6 +2,7 @@ name: Update Artifacts List
 on:
   repository_dispatch:
     types: [ "update-artifacts" ]
+  workflow_dispatch:
 
 jobs:
   update-artifacts:
