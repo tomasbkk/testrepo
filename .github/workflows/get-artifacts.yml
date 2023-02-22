@@ -16,11 +16,12 @@ jobs:
           echo "$ARTIFACTS"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Commit and Push Artifacts File
+      - name: Checkout repo
         uses: actions/checkout@v2
         with:
-          ref: "main"
+          ref: "master"
           path: "repo"
+      - name: Commit and Push Artifacts File
         run: |
           git config --global user.name "Github Actions"
           git config --global user.email "pr0digy1@hotmail.com"
