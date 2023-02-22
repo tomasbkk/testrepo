@@ -1,34 +1,18 @@
-name: Update Artifacts List
+name: List Artifacts
 on:
-  repository_dispatch:
-    types: [ "update-artifacts" ]
   workflow_dispatch:
 
 jobs:
-  update-artifacts:
+  list-artifacts:
     runs-on: ubuntu-latest
     steps:
       - name: List Artifacts
-        id: list-artifacts
         run: |
           OWNER="ZePuMedical"
           REPO="imsonicSWUpgraded"
+          RUN_ID="${{ github.event.workflow_run.id }}"
           TOKEN="${{ secrets.PAT }}"
-          # Get a list of artifacts for the repository
           ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
-            "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts?per_page=100" \
+            "https://api.github.com/repos/${OWNER}/${REPO}/actions/runs/${RUN_ID}/artifacts" \
             | jq -r '.artifacts[]')
-
-          # Loop through the list of artifacts and output their name-value pairs
-          echo "{"
-          FIRST="true"
-          for artifact in $ARTIFACTS; do
-            if [ "$FIRST" = "true" ]; then
-              FIRST="false"
-            else
-              echo ","
-            fi
-            echo -n "\"$((i++) + 1)\": "
-            echo "$artifact" | jq -c '{name: .name, url: .archive_download_url, id: .id, node_id: .node_id, size_in_bytes: .size_in_bytes, created_at: .created_at, updated_at: .updated_at, expires_at: .expires_at, state: .state, archive_upload_url: .archive_upload_url, artifact_upload_url: .artifact_upload_url, url: .url}'
-          done
-          echo "}"
+          echo "Artifacts: $ARTIFACTS"
