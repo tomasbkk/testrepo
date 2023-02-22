@@ -9,14 +9,23 @@ jobs:
           OWNER="ZePuMedical"
           REPO="imsonicSWUpgraded"
           TOKEN="${{ secrets.PAT }}"
-          PAGE=1
-          while true; do
-            ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
-              "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts?per_page=100&page=${PAGE}" \
-              | jq -r '.artifacts[] | "\(.name) - \(.url)"')
-            if [ -z "$ARTIFACTS" ]; then
-              break
-            fi
-            echo "Artifacts: $ARTIFACTS"
-            PAGE=$((PAGE+1))
-          done
+          curl -sH "Authorization: token ${TOKEN}" \
+            "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts?per_page=100" \
+            -o artifacts.json
+          ARTIFACTS=$(jq -r '.artifacts[] | "\(.name) - \(.url)"' artifacts.json)
+          echo "$ARTIFACTS"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and Push Artifacts File
+        uses: actions/checkout@v2
+        with:
+          ref: "main"
+          path: "repo"
+        run: |
+          git config --global user.name "Github Actions"
+          git config --global user.email "pr0digy1@hotmail.com"
+          git add repo/artifacts.json
+          git commit -m "Update artifacts.json"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
