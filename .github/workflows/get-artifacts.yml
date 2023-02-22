@@ -8,4 +8,4 @@ jobs:
       uses: MichaelMelena/list-artifacts@v1
       with:
         GITHUB_TOKEN: ${{ secrets.pat }}
-        respository: ZePuMedical/imsonicSWUpgraded
+        repository: ZePuMedical/imsonicSWUpgraded
