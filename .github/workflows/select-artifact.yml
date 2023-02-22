@@ -3,10 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       artifact:
-        type: choice
         description: "Select an artifact to use"
         required: true
-        options: ${{ fromJson(steps.list-artifacts.outputs.artifacts) }}
+        options: ${{ fromJson(file('artifacts-list.json')) }}
 
 jobs:
   my-job:
