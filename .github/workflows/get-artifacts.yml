@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: List Artifacts
+        id: list-artifacts
         run: |
           OWNER="ZePuMedical"
           REPO="imsonicSWUpgraded"
