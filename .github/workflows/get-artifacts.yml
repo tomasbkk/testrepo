@@ -1,0 +1,11 @@
+name: Advance get artifacts
+on: [workflow_dispatch]
+jobs:
+  get-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+    - id: result
+      uses: MichaelMelena/list-artifacts@v1
+      with:
+        GITHUB_TOKEN: ${{ secrets.pat }}
+        respository: ZePuMedical/imsonicSWUpgraded
