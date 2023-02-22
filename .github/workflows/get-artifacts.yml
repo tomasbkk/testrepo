@@ -8,9 +8,15 @@ jobs:
         run: |
           OWNER="ZePuMedical"
           REPO="imsonicSWUpgraded"
-          RUN_ID="${{ github.event.workflow_run.id }}"
           TOKEN="${{ secrets.PAT }}"
-          ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
-            "https://api.github.com/repos/${OWNER}/${REPO}/actions/runs/${RUN_ID}/artifacts" \
-            | jq -r '.artifacts[].name')
-          echo "Artifacts: $ARTIFACTS"
+          PAGE=1
+          while true; do
+            ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
+              "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts?per_page=100&page=${PAGE}" \
+              | jq -r '.artifacts[].url')
+            if [ -z "$ARTIFACTS" ]; then
+              break
+            fi
+            echo "Artifacts: $ARTIFACTS"
+            PAGE=$((PAGE+1))
+          done
