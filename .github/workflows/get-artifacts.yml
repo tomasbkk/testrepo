@@ -14,6 +14,6 @@ jobs:
             "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts?per_page=100" \
             -o artifacts.json
           ARTIFACTS=$(jq -c '[.artifacts[] | {name: .name, id: .id}]' artifacts.json)
-          echo "::set-output name=artifacts::$ARTIFACTS"
+          echo "ARTIFACTS=$ARTIFACTS" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
