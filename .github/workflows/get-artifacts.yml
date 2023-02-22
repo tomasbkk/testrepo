@@ -13,6 +13,6 @@ jobs:
           RUN_ID="${{ github.event.workflow_run.id }}"
           TOKEN="${{ secrets.PAT }}"
           ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
-            "https://api.github.com/repos/${OWNER}/${REPO}/actions/runs/${RUN_ID}/artifacts" \
-            | jq -r '.artifacts[]')
+              "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts" \
+              | jq -r '.artifacts[].url')
           echo "Artifacts: $ARTIFACTS"
