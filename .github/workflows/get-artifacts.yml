@@ -12,21 +12,7 @@ jobs:
           curl -sH "Authorization: token ${TOKEN}" \
             "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts?per_page=100" \
             -o artifacts.json
-          ARTIFACTS=$(jq -r '.artifacts[] | "\(.name) - \(.url)"' artifacts.json)
-          echo "$ARTIFACTS"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          ref: "master"
-          path: "repo"
-      - name: Commit and Push Artifacts File
-        run: |
-          git config --global user.name "Github Actions"
-          git config --global user.email "pr0digy1@hotmail.com"
-          git add repo/artifacts.json
-          git commit -m "Update artifacts.json"
-          git push
+          ARTIFACTS=$(jq -c '[.artifacts[] | {name: .name, id: .id}]' artifacts.json)
+          echo "::set-output name=artifacts::$ARTIFACTS"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
