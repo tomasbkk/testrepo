@@ -13,7 +13,7 @@ jobs:
           while true; do
             ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
               "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts?per_page=100&page=${PAGE}" \
-              | jq -r '.artifacts[].url')
+              | jq -r '.artifacts[] | "\(.name) - \(.url)"')
             if [ -z "$ARTIFACTS" ]; then
               break
             fi
