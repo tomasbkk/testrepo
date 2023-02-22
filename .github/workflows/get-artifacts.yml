@@ -14,5 +14,5 @@ jobs:
           TOKEN="${{ secrets.PAT }}"
           ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
               "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts" \
-              | jq -r '.artifacts[].url')
+              | jq -r '.artifacts[]')
           echo "Artifacts: $ARTIFACTS"
