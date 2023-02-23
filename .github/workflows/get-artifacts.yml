@@ -10,9 +10,8 @@ jobs:
         run: |
           OWNER="ZePuMedical"
           REPO="imsonicSWUpgraded"
-          RUN_ID="${{ github.event.workflow_run.id }}"
           TOKEN="${{ secrets.PAT }}"
           ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
               "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts" \
               | jq -r '.artifacts[] | "Name: \(.name)\nSize: \(.size_in_bytes)\nExpires: \(.expires_at)\nWorkflow run head branch: \(.workflow_run.head_branch)\n"')
-          echo -e "ImSonick SDK available builds:\r\n$ARTIFACTS"
+          echo -e "ImSonic SDK available builds:\n\n$ARTIFACTS"
