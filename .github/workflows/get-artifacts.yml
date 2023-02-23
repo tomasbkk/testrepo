@@ -15,4 +15,4 @@ jobs:
           ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
               "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts" \
               | jq -r '.artifacts[] | "Name: \(.name)\nSize: \(.size_in_bytes)\nExpires: \(.expires_at)\nWorkflow run head branch: \(.workflow_run.head_branch)\n"')
-          echo "ImSonick SDK available builds:\n$ARTIFACTS"
+          echo "ImSonick SDK available builds:\r\n$ARTIFACTS"
