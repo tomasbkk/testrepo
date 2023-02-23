@@ -8,8 +8,7 @@ jobs:
     steps:
       - name: Get latest artifact name
         run: |
-          curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.PAT }}"\
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/repos/tomasbkk/testrepo/actions/variables \
-          -d '{"name":"newTestVar","value":"new test value"}'
+          $ARTIFACT = curl -sH "Authorization: token ${{ secrets.PAT }}" https://api.github.com/repos/ZePuMedical/imsonicSWUpgraded/actions/artifacts | jq -r '.artifacts[0].name'
+          echo "Latest artifact name: $ARTIFACT"
+          echo "sdk_build_name=$ARTIFACT" >> $env:GITHUB_ENV
 
