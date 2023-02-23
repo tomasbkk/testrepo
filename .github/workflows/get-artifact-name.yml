@@ -10,6 +10,6 @@ jobs:
         env:
           PAT: ${{ secrets.PAT }}
         run: |
-          $ARTIFACT = curl --silent -H "Authorization: token $PAT" https://api.github.com/repos/ZePuMedical/imsonicSWUpgraded/actions/artifacts | jq -r '.artifacts[0].name'
+          $ARTIFACT = curl --silent -H "Authorization: token $PAT" https://api.github.com/repos/ZePuMedical/imsonicSWUpgraded/actions/artifacts | jq -r '.artifacts[]'
           echo "Latest artifact name: $ARTIFACT"
           echo "artifact_name=$ARTIFACT" >> $GITHUB_ENV
