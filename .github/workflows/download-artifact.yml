@@ -1,20 +1,22 @@
 name: Download Artifact
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      artifact_name:
+        description: 'The name of the artifact to download. Leave blank to download the latest artifact.'
+        required: false
 
 jobs:
   download:
     runs-on: windows-2019
     steps:
-      - name: Download Latest Artifact
+      - name: Download Artifact
         uses: actions/download-artifact@v2
         with:
           repository: ZepuMedical/imsonicSWUpgraded
           token: ${{ secrets.PAT }}
-          name: latest
+          name: ${{ github.event.inputs.artifact_name || 'latest' }}
           path: .
 
       - name: Use Downloaded Artifact
