@@ -4,7 +4,7 @@ on:
 
 jobs:
   list-artifacts:
-    runs-on: windows-2019
+    runs-on: ubuntu-latest
     steps:
       - name: List Artifacts
         run: |
