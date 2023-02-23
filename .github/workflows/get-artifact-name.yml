@@ -11,4 +11,8 @@ jobs:
           $ARTIFACT = curl -sH "Authorization: token ${{ secrets.PAT }}" https://api.github.com/repos/ZePuMedical/imsonicSWUpgraded/actions/artifacts | jq -r '.artifacts[0].name'
           echo "Latest artifact name: $ARTIFACT"
           echo "artifact_name=$ARTIFACT" >> $GITHUB_ENV
+          
+      - name: list dir
+        run: |
+          dir .
 
