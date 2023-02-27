@@ -1,4 +1,4 @@
-name: CMake
+name: Build test app
 
 on:
   workflow_dispatch:
@@ -39,6 +39,7 @@ env:
   GITHUB_BUILD_NUMBER: ''
 
 jobs:
+
   call-workflow-2-in-local-repo:
     uses: ./.github/workflows/get-artifact-name.yml
     
