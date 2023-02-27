@@ -31,6 +31,13 @@ on:
         type: string
         description: 'Version rev'
         default: '0'
+      useSdkBuild:
+        type: boolean
+        default: true
+        description: 'Use SDK build instead of SDKLIB repository'
+      sdkBuild:
+        type: string
+        description: 'SDK build name (if empty latest build is used), list of names are available in Get SDK builds action'      
         
 
 env:
@@ -39,10 +46,6 @@ env:
   GITHUB_BUILD_NUMBER: ''
 
 jobs:
-
-  call-workflow-2-in-local-repo:
-    uses: ./.github/workflows/get-artifact-name.yml
-    
   build:
     runs-on: windows-2019
 
@@ -50,8 +53,27 @@ jobs:
      
     - uses: actions/checkout@v3
 
+    - name: Get latest SDK Build
+      if: ${{ github.event.inputs.sdkBuild == '' }}
+      run: |
+        $ARTIFACT = curl -sH "Authorization: token ${{ secrets.PAT }}" https://api.github.com/repos/ZePuMedical/imsonicSWUpgraded/actions/artifacts | jq -r '.artifacts[0].name'
+        echo "Latest SDK Build: $ARTIFACT"
+        echo "sdk_build_name=$ARTIFACT" >> $env:GITHUB_ENV
 
-    
+    - name: Set user defined SDK Build name
+      if: ${{ github.event.inputs.sdkBuild != '' }}
+      run: |
+        echo "sdk_build_name=${{ github.event.inputs.sdkBuild }}" >> $env:GITHUB_ENV
+        
+    - name: Download SDK Build
+      uses: aochmann/actions-download-artifact@1.0.4
+      if: ${{ github.event.inputs.useSdkBuild == 'true' }}
+      with:
+        repo: ZepuMedical/imsonicSWUpgraded
+        github_token: ${{ secrets.PAT }}
+        name: ${{ github.event.inputs.sdkBuild }}
+        latest: ${{ github.event.inputs.sdkBuild == '' }}
+
     - name: Get timestamp
       if: true
       id: time
