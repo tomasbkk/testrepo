@@ -1,7 +1,8 @@
 name: Get artifact name
 on:
   workflow_dispatch:
-
+  workflow_call:
+  
 jobs:
   get_artifact_name:
     runs-on: windows-2019
