@@ -25,7 +25,7 @@ jobs:
         run: |
           # Do something with the downloaded artifact
           dir
-          cd ${{ github.event.inputs.artifact_name }}
+          cd ImSonicSDK
           dir
           cd bin
           dir
