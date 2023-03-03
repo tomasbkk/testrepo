@@ -7,17 +7,27 @@ on:
         description: 'The name of the artifact to download. Leave blank to download the latest artifact.'
         required: false
 
+env:
+  SDK_BUILD_NAME: ${{ github.event.inputs.artifact_name }
+  
 jobs:
   download:
     runs-on: windows-2019
     steps:
+      - name: Set latest SDK Build name
+        if: ${{ github.event.inputs.artifact_name == '' }}
+        run: |
+          $ARTIFACT = curl -sH "Authorization: token ${{ secrets.PAT }}" https://api.github.com/repos/ZePuMedical/imsonicSWUpgraded/actions/artifacts | jq -r '.artifacts[0].name'
+          echo "Latest SDK Build: $ARTIFACT"
+          echo "SDK_BUILD_NAME=$ARTIFACT" >> $env:GITHUB_ENV
+        
       - name: Download Artifact
         uses: aochmann/actions-download-artifact@1.0.4
         with:
           repo: ZepuMedical/imsonicSWUpgraded
           github_token: ${{ secrets.PAT }}
-          name: ${{ github.event.inputs.artifact_name }}
-          latest: ${{ github.event.inputs.artifact_name == '' }}
+          name: ${{ env.SDK_BUILD_NAME }}
+          latest: false
           path: ImSonicSDK
           
 
