@@ -8,7 +8,7 @@ on:
         required: false
 
 env:
-  SDK_BUILD_NAME: ${{ github.event.inputs.artifact_name }
+  SDK_BUILD_NAME: ${{ github.event.inputs.artifact_name }}
   
 jobs:
   download:
