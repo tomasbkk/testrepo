@@ -23,6 +23,6 @@ jobs:
       - name: Use Downloaded Artifact
         run: |
           # Do something with the downloaded artifact
-          dir .
+          dir
 
 
