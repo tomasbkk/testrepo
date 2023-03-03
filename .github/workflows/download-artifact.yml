@@ -18,7 +18,6 @@ jobs:
           github_token: ${{ secrets.PAT }}
           name: ${{ github.event.inputs.artifact_name }}
           latest: ${{ github.event.inputs.artifact_name == '' }}
-          path: imsonicSDK
 
       - name: Use Downloaded Artifact
         run: |
