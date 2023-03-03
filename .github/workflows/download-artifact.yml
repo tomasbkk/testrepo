@@ -29,5 +29,7 @@ jobs:
           dir
           cd bin
           dir
+          cd debug
+          dir
 
 
