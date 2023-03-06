@@ -71,7 +71,7 @@ jobs:
         
     - name: Download SDK Build
       uses: aochmann/actions-download-artifact@1.0.4
-      if: ${{ github.event.inputs.useSdkBuild == 'true' }}
+      if: ${{ github.event.inputs.useSdkBuild == 'true' || github.event.inputs.useSdkBuild == '' }}
       with:
         repo: ZepuMedical/imsonicSWUpgraded
         github_token: ${{ secrets.PAT }}
