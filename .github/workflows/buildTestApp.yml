@@ -47,6 +47,7 @@ env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
   GITHUB_BUILD_NUMBER: ''
+  USE_SDK_BUILD: ${{ github.event.inputs.useSdkBuild }}
 
 jobs:
   build:
