@@ -1,0 +1,16 @@
+name: Build ImSonicSDK
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Get timestamp
+      id: time
+      uses: nanzm/get-time-action@v1.1
+      with:
+        format: 'YYYY.MM.DD-HH.mm.ss'
