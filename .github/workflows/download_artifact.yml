@@ -1,0 +1,19 @@
+name: Download artifact
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+    
+    - name: Download SDK Build
+      uses: aochmann/actions-download-artifact@1.0.4
+      with:
+        repo: ZepuMedical/imsonicSWUpgraded
+        github_token: ${{ secrets.PAT }}
+        name: ImSonicSDK_1.0.0.0_dev_114_2023.03.21-11.34.46
+        latest: false
+        path: ImSonicSDK
