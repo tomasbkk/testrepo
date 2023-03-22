@@ -1,4 +1,4 @@
-name: Build ImSonicSDK
+name: Get timestamp
 
 on:
   workflow_dispatch:
