@@ -33,7 +33,7 @@ on:
         default: '0'
       useSdkBuild:
         type: boolean
-        default: true
+        default: false
         description: 'Use SDK build instead of SDKLIB repository'
       sdkBuild:
         type: string
