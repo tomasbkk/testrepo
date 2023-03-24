@@ -143,7 +143,7 @@ jobs:
 
     - name: Upload bundle
       if: true
-      uses: tomasbkk/action-simple-file-upload@master
+      uses: tomasbkk/action-ftp-upload@master
       with:
         user: "u836597012.imsonic"
         password: "ZepuZepu311"
