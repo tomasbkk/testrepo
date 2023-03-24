@@ -16,5 +16,6 @@ jobs:
         format: 'YYYY.MM.DD-HH.mm.ss'
         
     - name: Print timestamp
+      shell: cmd
       run: |
         echo ${{ steps.time.outputs.time }}
