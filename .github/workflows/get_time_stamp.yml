@@ -14,3 +14,7 @@ jobs:
       uses: tomasbkk/get-time-action@v1.2
       with:
         format: 'YYYY.MM.DD-HH.mm.ss'
+        
+    - name: Print timestamp
+      run: |
+        echo ${{ steps.time.outputs.time }}
