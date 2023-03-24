@@ -18,4 +18,5 @@ jobs:
     - name: Print timestamp
       shell: cmd
       run: |
-        echo ${{ steps.time.outputs.time }}
+        
+        echo Timestamp = ${{ steps.time.outputs.time }}
