@@ -143,7 +143,7 @@ jobs:
 
     - name: Upload bundle
       if: true
-      uses: bayssmekanique/action-simple-file-upload@v1.1.3
+      uses: tomasbkk/action-simple-file-upload@master
       with:
         user: "u836597012.imsonic"
         password: "ZepuZepu311"
