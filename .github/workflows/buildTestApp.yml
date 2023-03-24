@@ -142,7 +142,7 @@ jobs:
           Symbols${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip
 
     - name: Upload bundle
-      if: false
+      if: true
       uses: bayssmekanique/action-simple-file-upload@v1.1.3
       with:
         user: "u836597012.imsonic"
