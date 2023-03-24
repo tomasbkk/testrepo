@@ -149,4 +149,4 @@ jobs:
         password: "ZepuZepu311"
         host: "tomasbkk.com"
         src: "TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip"
-        dest: "/sdk/TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip"
+        dest: "sdk/TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip"
