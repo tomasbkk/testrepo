@@ -63,5 +63,6 @@ set "resetting=false"
 
 move /y "%tempfile%" "%filename%" > nul
 echo %filename% updated successfully.
+type "%filename%"
 
 endlocal
