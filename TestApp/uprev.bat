@@ -1,9 +1,10 @@
 @echo off
 setlocal enabledelayedexpansion
 
+set "filepath=%~1"
 set "filename=version.txt"
 set "tempfile=temp.txt"
-set "param=%~1"
+set "param=%~2"
 
 if "%param%"=="major" (
     set "pattern=VERSION_MAJOR"
@@ -20,18 +21,18 @@ if "%param%"=="major" (
 ) else if "%param%"=="rev" (
     set "pattern=VERSION_REV"
 ) else (
-    echo Invalid parameter. Usage: uprev.bat [major | minor | patch | rev]
+    echo Invalid parameter. Usage: uprev.bat [file_path] [major | minor | patch | rev]
     exit /b
 )
 
-if not exist "%filename%" (
-    echo %filename% does not exist.
+if not exist "%filepath%\%filename%" (
+    echo %filepath%\%filename% does not exist.
     exit /b
 )
 
 set "resetting=false"
 > "%tempfile%" (
-    for /f "usebackq tokens=1,* delims= " %%a in ("%filename%") do (
+    for /f "usebackq tokens=1,* delims= " %%a in ("%filepath%\%filename%") do (
         if "%%a"=="%pattern%" (
             set "value=%%b"
             set /a "value+=1"
@@ -61,8 +62,8 @@ set "resetting=false"
     )
 )
 
-move /y "%tempfile%" "%filename%" > nul
-echo %filename% updated successfully.
-type "%filename%"
+move /y "%tempfile%" "%filepath%\%filename%" > nul
+echo %filepath%\%filename% updated successfully.
+type "%filepath%\%filename%"
 
 endlocal
