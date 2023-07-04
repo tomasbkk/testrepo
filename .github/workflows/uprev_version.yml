@@ -32,7 +32,7 @@ jobs:
       - name: Uprev version
         if: ${{ env.RUN_ALL_STEPS == 1 && github.event.inputs.versionUprev != 'none'}}
         shell: cmd
-        run: ${{ github.workspace }}/TestApp/uprev.bat ${{ github.event.inputs.versionUprev }}
+        run: ${{ github.workspace }}/TestApp/uprev.bat ${{ github.workspace }}/TestApp ${{ github.event.inputs.versionUprev }}
             
       - name: Commit & Push
         if: ${{ env.RUN_ALL_STEPS == 1 && github.event.inputs.versionUprev != 'none'}}
