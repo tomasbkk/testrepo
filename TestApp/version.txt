@@ -1,4 +1,1 @@
-VERSION_MAJOR 0
-VERSION_MINOR 9
-VERSION_PATCH 2
-VERSION_REV 1
+console.log('some contents')
