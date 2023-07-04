@@ -6,19 +6,19 @@ on:
       versionUprev:
         type: choice
         description: 'Version uprev'
-        default: major
+        default: rev
         options: 
         - major
-        - feature
-        - bug
-        - alpha
-        - beta
-        - rc        
+        - minor
+        - patch
+        - rev
+        - none
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
   GITHUB_BUILD_NUMBER: ''
+  RUN_ALL_STEPS: 1
 
 jobs:
   build:
@@ -29,18 +29,16 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Overwrite file
-        uses: "DamianReeves/write-file-action@master"
-        with:
-          path: TestApp/version.txt
-          write-mode: overwrite
-          contents: |
-            console.log('some contents')
+      - name: Uprev version
+        if: ${{ env.RUN_ALL_STEPS == 1 && github.event.inputs.versionUprev != 'none'}}
+        shell: cmd
+        run: ${{ github.workspace }}/TestApp/uprev.bat ${{ github.event.inputs.versionUprev }}
             
       - name: Commit & Push
+        if: ${{ env.RUN_ALL_STEPS == 1 && github.event.inputs.versionUprev != 'none'}}
         uses: Andro999b/push@v1.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: master
           force: true
-          message: 'Overwritten by Github Actions - ${date}'
+          message: 'Comitted and pushed version.txt'
