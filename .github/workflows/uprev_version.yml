@@ -28,14 +28,21 @@ jobs:
     runs-on: windows-2019
 
     steps:
-
+    
+      - name: Set release build details
+        if: ${{ env.RUN_ALL_STEPS == 1 }}
+        run: |
+          echo "BUILD_DETAILS=" >> $env:GITHUB_ENV
+        
       - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Uprev version
         if: ${{ env.RUN_ALL_STEPS == 1 && github.event.inputs.versionUprev != 'none' && github.ref_name == 'master' }}
         shell: cmd
-        run: ${{ github.workspace }}/TestApp/uprev.bat ${{ github.workspace }}/TestApp ${{ github.event.inputs.versionUprev }}
+        run: |
+          echo ${{ env.BUILD_DETAILS }}
+          ${{ github.workspace }}/TestApp/uprev.bat ${{ github.workspace }}/TestApp ${{ github.event.inputs.versionUprev }}
             
       - name: Commit & Push
         if: ${{ env.RUN_ALL_STEPS == 1 && github.event.inputs.versionUprev != 'none' && github.ref_name == 'master' }}
