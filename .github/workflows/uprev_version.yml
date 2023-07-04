@@ -3,10 +3,10 @@ name: Uprev vesion
 on:
   workflow_dispatch:
     inputs:
-      buildType:
+      versionUprev:
         type: choice
-        description: 'Build Type'
-        default: Release
+        description: 'Version uprev'
+        default: major
         options: 
         - major
         - feature
@@ -25,14 +25,22 @@ jobs:
     runs-on: windows-2019
 
     steps:
-     
-    - name: Bump release version
-      id: bump_version
-      uses: christian-draeger/increment-semantic-version@1.0.3
-      with:
-        current-version: '2.11.7-alpha3'
-        version-fragment: 'feature'
-    - name: Do something with your bumped release version
-      run: echo ${{ steps.bump_version.outputs.next-version }}
-      # will print 2.12.0
-      
+
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Overwrite file
+        uses: "DamianReeves/write-file-action@master"
+        with:
+          path: path/to/file.js
+          write-mode: overwrite
+          contents: |
+            console.log('some contents')
+            
+      - name: Commit & Push
+        uses: Andro999b/push@v1.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          force: true
+          message: 'Overwritten by Github Actions - ${date}'
