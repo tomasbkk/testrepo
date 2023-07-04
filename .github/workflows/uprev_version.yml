@@ -1,0 +1,38 @@
+name: Uprev vesion
+
+on:
+  workflow_dispatch:
+    inputs:
+      buildType:
+        type: choice
+        description: 'Build Type'
+        default: Release
+        options: 
+        - major
+        - feature
+        - bug
+        - alpha
+        - beta
+        - rc        
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+  GITHUB_BUILD_NUMBER: ''
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+     
+    - name: Bump release version
+      id: bump_version
+      uses: christian-draeger/increment-semantic-version@1.0.3
+      with:
+        current-version: '2.11.7-alpha3'
+        version-fragment: 'feature'
+    - name: Do something with your bumped release version
+      run: echo ${{ steps.bump_version.outputs.next-version }}
+      # will print 2.12.0
+      
