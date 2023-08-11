@@ -144,7 +144,7 @@ jobs:
     - name: Create Tag
       uses: tomasbkk/create-tag@main
       with:
-        version: '1.0.0'
+        version: 'asdf'
         message: ""
         token: ${{ secrets.GITHUB_TOKEN }}
         semanticVersion: false
