@@ -45,7 +45,8 @@ env:
   BUILD_TYPE: Release
   GITHUB_BUILD_NUMBER: ''
   USE_SDK_BUILD: ${{ github.event.inputs.useSdkBuild }}
-
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
 jobs:
   build:
     runs-on: windows-2019
@@ -141,13 +142,13 @@ jobs:
           TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip
           Symbols${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip
           
-    - name: Create Tag
-      uses: tomasbkk/create-tag@main
+    - name: Create tag
+      uses: joutvhu/create-tag@v1
       with:
-        version: '1.0.0.0_dev_144_2023.08.11-11.48.47'
-        message: ""
-        token: ${{ secrets.GITHUB_TOKEN }}
-        semanticVersion: false
+        tag_name: '1.0.0.0_dev_144_2023.08.11-11.48.47'
+        on_tag_exists: update
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
     - name: Upload bundle
       if: false
