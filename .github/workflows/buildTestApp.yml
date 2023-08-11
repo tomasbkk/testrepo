@@ -62,13 +62,13 @@ jobs:
         echo "sdk_build_name=$ARTIFACT" >> $env:GITHUB_ENV
 
     - name: Set user defined SDK Build name
-      if: ${{ github.event.inputs.sdkBuild != '' }}
+      if: ${{ github.event.inputs.sdkBuild != '' }} && false
       run: |
         echo "sdk_build_name=${{ github.event.inputs.sdkBuild }}" >> $env:GITHUB_ENV
         
     - name: Download SDK Build
-      uses: aochmann/actions-download-artifact@1.0.4 && false
-      if: ${{ github.event.inputs.useSdkBuild == 'true' || github.event.inputs.useSdkBuild == '' }}
+      uses: aochmann/actions-download-artifact@1.0.4
+      if: ${{ github.event.inputs.useSdkBuild == 'true' || github.event.inputs.useSdkBuild == '' }} && false
       with:
         repo: ZepuMedical/imsonicSWUpgraded
         github_token: ${{ secrets.PAT }}
