@@ -55,7 +55,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Get latest SDK Build
-      if: ${{ github.event.inputs.sdkBuild == '' }}
+      if: ${{ github.event.inputs.sdkBuild == '' }} && false
       run: |
         $ARTIFACT = curl -sH "Authorization: token ${{ secrets.PAT }}" https://api.github.com/repos/ZePuMedical/imsonicSWUpgraded/actions/artifacts | jq -r '.artifacts[0].name'
         echo "Latest SDK Build: $ARTIFACT"
@@ -67,7 +67,7 @@ jobs:
         echo "sdk_build_name=${{ github.event.inputs.sdkBuild }}" >> $env:GITHUB_ENV
         
     - name: Download SDK Build
-      uses: aochmann/actions-download-artifact@1.0.4
+      uses: aochmann/actions-download-artifact@1.0.4 && false
       if: ${{ github.event.inputs.useSdkBuild == 'true' || github.event.inputs.useSdkBuild == '' }}
       with:
         repo: ZepuMedical/imsonicSWUpgraded
@@ -140,9 +140,16 @@ jobs:
         files: |
           TestApp${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip
           Symbols${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip
-
+          
+    - name: Create Tag
+      uses: negz/create-tag@v1
+      with:
+        version: ${{ steps.versionTrim.outputs.replaced }}
+        message: ""
+        token: ${{ secrets.GITHUB_TOKEN }}
+          
     - name: Upload bundle
-      if: true
+      if: false
       uses: tomasbkk/action-ftp-upload@v1.0
       with:
         user: "u836597012.imsonic"
