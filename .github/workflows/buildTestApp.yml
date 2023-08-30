@@ -63,7 +63,7 @@ jobs:
         echo "sdk_build_name=$ARTIFACT" >> $env:GITHUB_ENV
 
     - name: Set user defined SDK Build name
-      if: ${{ github.event.inputs.sdkBuild != '' && false }}
+      if: ${{ github.event.inputs.sdkBuild != '' }}
       run: |
         echo "sdk_build_name=${{ github.event.inputs.sdkBuild }}" >> $env:GITHUB_ENV
         echo "branch: ${{ github.ref_name }}"
