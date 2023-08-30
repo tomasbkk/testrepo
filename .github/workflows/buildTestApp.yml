@@ -66,6 +66,7 @@ jobs:
       if: ${{ github.event.inputs.sdkBuild != '' && false }}
       run: |
         echo "sdk_build_name=${{ github.event.inputs.sdkBuild }}" >> $env:GITHUB_ENV
+        echo "branch: ${{ github.ref_name }}"
         
     - name: Download SDK Build
       uses: aochmann/actions-download-artifact@1.0.4
