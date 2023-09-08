@@ -1,0 +1,17 @@
+name: Get release notes
+on:
+  workflow_dispatch:
+
+jobs:
+  list-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List Artifacts
+        run: |
+          OWNER="ImSonicZePu"
+          REPO="MtBakerSystem"
+          TOKEN="${{ secrets.PAT }}"
+          ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
+              "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts" \
+              | jq -r '.artifacts[] | "Name: \(.name)\nSize: \(.size_in_bytes)\nExpires: \(.expires_at)\nBuilt on branch: \(.workflow_run.head_branch)\n"')
+          echo -e "ImSonic SDK available builds:\n\n$ARTIFACTS"
