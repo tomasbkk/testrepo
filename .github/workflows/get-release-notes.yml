@@ -13,5 +13,5 @@ jobs:
           TOKEN="${{ secrets.PAT }}"
           ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
               "https://api.github.com/repos/${OWNER}/${REPO}/releases/generate-notes?tag_name=v0.9.2.3_dev_2023.09.08-10.35.17" \
-              | jq -r '.artifacts[] | "Name: \(.name)\nSize: \(.size_in_bytes)\nExpires: \(.expires_at)\nBuilt on branch: \(.workflow_run.head_branch)\n"')
+              | jq -r '.')
           echo -e "Release notes:\n\n$ARTIFACTS"
