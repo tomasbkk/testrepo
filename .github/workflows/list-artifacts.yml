@@ -8,8 +8,8 @@ jobs:
     steps:
       - name: List Artifacts
         run: |
-          OWNER="ZePuMedical"
-          REPO="imsonicSWUpgraded"
+          OWNER="ImSonicZePu"
+          REPO="MtBakerSystem"
           TOKEN="${{ secrets.PAT }}"
           ARTIFACTS=$(curl -sH "Authorization: token ${TOKEN}" \
               "https://api.github.com/repos/${OWNER}/${REPO}/actions/artifacts" \
