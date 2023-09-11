@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Checkout Mt.BakerSystem
         uses: actions/checkout@v3
+        with:
+          fetch-tags: 'true'
         
       - name: get Git tags
         shell: cmd
