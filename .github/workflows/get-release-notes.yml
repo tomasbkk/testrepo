@@ -12,7 +12,7 @@ jobs:
       - name: Get last 2 repo tags
         shell: cmd
         run: |
-          git --status
+          git status
           ${{ github.workspace }}/TestApp/get_git_tags.bat
       
       - name: Generate Release Notes
