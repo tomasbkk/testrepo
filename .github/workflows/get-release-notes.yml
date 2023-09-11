@@ -6,16 +6,11 @@ jobs:
   list-artifacts:
     runs-on: ubuntu-latest
     steps:
-      - name: get release notes
-        run: |
-          OWNER="ImSonicZePu"
-          REPO="MtBakerSystem"
-          TOKEN="${{ secrets.PAT }}"
-          ARTIFACTS=$(curl -L \
-                -X POST \
-                -H "Accept: application/vnd.github+json" \
-                -H "Authorization: token ${{ secrets.PAT }}" \
-                -H "X-GitHub-Api-Version: 2022-11-28" \
-                https://api.github.com/repos/OWNER/REPO/releases/generate-notes \
-                -d '{"tag_name":"v0.9.2.3_dev_2023.09.08-10.35.17"}')
-          echo -e "Release notes:\n\n$ARTIFACTS"
+      - name: Generate Release Notes
+        id: notes
+        uses: tomasbkk/release-notes-action@add_previous_tag
+        with:
+          tag-name: '1.0.0.0_dev_144_2023.08.11-11.48.47'
+          token: ${{ secrets.PAT }}
+      - name: Do something
+        run: echo ${{ steps.notes.outputs.release-notes }}          
