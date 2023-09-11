@@ -14,4 +14,6 @@ for /f "delims=" %%i in ('git for-each-ref --count=2 --sort=-creatordate --forma
   )
 )
 
+echo First tag: %TAG1%
+echo Second tag: %TAG2%
 endlocal
