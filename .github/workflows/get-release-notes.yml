@@ -9,8 +9,8 @@ jobs:
       - name: Checkout Mt.BakerSystem
         uses: actions/checkout@v3
         
-      - name: Check Git Version
-        run: git --version
+      - name: get Git tags
+        run: git tag
 
       - name: Get last 2 repo tags
         shell: cmd
