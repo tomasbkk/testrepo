@@ -12,7 +12,7 @@ jobs:
       - name: Get last 2 repo tags
         shell: cmd
         run: |
-          git status
+          git for-each-ref --count=2 --sort=-creatordate --format "%%(refname:short)" refs/tags
           ${{ github.workspace }}/TestApp/get_git_tags.bat
       
       - name: Generate Release Notes
