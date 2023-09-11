@@ -1,9 +1,7 @@
 name: Get Last 2 Tags
 
 on:
-  push:
-    branches:
-      - main  # Replace with the branch you want to trigger this on
+  workflow_dispatch:
 
 jobs:
   get-tags:
@@ -26,8 +24,8 @@ jobs:
         import requests
 
         # GitHub repository information
-        owner = "your_username"
-        repo = "your_repository"
+        owner = "tomasbkk"
+        repo = "testrepo"
 
         # GitHub API endpoint to list tags
         api_url = f"https://api.github.com/repos/{owner}/{repo}/tags"
