@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v3
         
       - name: get Git tags
-        run: git tag
+        run: cmd /c git tag
 
       - name: Get last 2 repo tags
         shell: cmd
