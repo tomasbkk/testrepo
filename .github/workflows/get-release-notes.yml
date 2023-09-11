@@ -4,14 +4,24 @@ on:
 
 jobs:
   get-release-notes:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
+      - name: Checkout Mt.BakerSystem
+        uses: actions/checkout@v3
+
+      - name: Get last 2 repo tags
+        shell: cmd
+        run: |
+          git for-each-ref --count=2 --sort=-creatordate --format "%%(refname:short)" refs/tags
+          ${{ github.workspace }}/TestApp/get_git_tags.bat
+      
       - name: Generate Release Notes
         id: notes
         uses: tomasbkk/release-notes-action@add_previous_tag
         with:
-          tag-name: '1.0.0.0_dev_144_2023.08.11-11.48.47'
-          token: ${{ secrets.PAT }}
+          tag-name: ${{ env.REPO_TAG1 }}
+          prev-tag-name: ${{ env.REPO_TAG2 }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: 'master'
       - name: Do something
-        run: echo ${{ steps.notes.outputs.release-notes }}          
+        run: echo ${{ steps.notes.outputs.release-notes }}  
