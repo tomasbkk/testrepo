@@ -1,0 +1,55 @@
+name: Get Last 2 Tags
+
+on:
+  push:
+    branches:
+      - main  # Replace with the branch you want to trigger this on
+
+jobs:
+  get-tags:
+    runs-on: windows-latest  # Use Windows Server 2019
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x  # Use the desired Python version
+
+    - name: Install dependencies
+      run: pip install requests
+
+    - name: Get Last 2 Tags
+      run: |
+        import requests
+
+        # GitHub repository information
+        owner = "your_username"
+        repo = "your_repository"
+
+        # GitHub API endpoint to list tags
+        api_url = f"https://api.github.com/repos/{owner}/{repo}/tags"
+
+        # Make a GET request to the API
+        response = requests.get(api_url)
+
+        # Check if the request was successful
+        if response.status_code == 200:
+            # Parse the JSON response
+            tags = response.json()
+
+            # Get the last 2 tags
+            last_two_tags = tags[:2]
+
+            # Print the last 2 tags
+            for tag in last_two_tags:
+                print("Tag Name:", tag["name"])
+                print("Commit SHA:", tag["commit"]["sha"])
+                print("--------")
+        else:
+            print("Failed to fetch tags. Status code:", response.status_code)
+
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
