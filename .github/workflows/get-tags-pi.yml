@@ -7,37 +7,21 @@ jobs:
     runs-on: windows-latest  # Use Windows Server 2019
 
     steps:
-    
-
+  
     - name: Checkout
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
       
-    - name: Get 4th tag from the last one
-      id: gittagskipthree
-      uses: pavelsaman/git-nth-last-tag@v1
-      with:
-        skip: 3
-        
-    - name: Get 2nd tag from the last one
-      id: gittagskipone
-      uses: pavelsaman/git-nth-last-tag@v1
-      with:
-        skip: 1
-        
-    - name: Get last tag
-      id: gittagskipnone
-      uses: pavelsaman/git-nth-last-tag@v1
-
-    - name: Get release info
-      id: release_info
-      uses: revam/gh-action-get-tag-and-version@v1
-    
-    - run: echo ${{ steps.gittagskipthree.outputs.tag }} # v1.2.7
-    - run: echo ${{ steps.gittagskipone.outputs.tag }}   # v1.3.1
-    - run: echo ${{ steps.gittagskipnone.outputs.tag }}  # v1.3.2
-
-
+    - name: Set output
+      id: vars
+      run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      
+    - name: Check output
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+      run: |
+        echo $RELEASE_VERSION
+        echo ${{ steps.vars.outputs.tag }}
+        echo ${{ github.ref_name }}
+
