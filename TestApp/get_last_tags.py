@@ -19,8 +19,8 @@ if response.status_code == 200:
     # Parse the JSON response
     tags = response.json()
 
-    # Sort tags by their creation date (tagger -> date)
-    sorted_tags = sorted(tags, key=lambda x: x['commit']['tagger']['date'], reverse=True)
+    # Sort tags by their creation date (tagger -> date or commit -> committer -> date)
+    sorted_tags = sorted(tags, key=lambda x: x['commit'].get('tagger', x['commit']['committer'])['date'], reverse=True)
 
     # Get the last 2 tags (the most recent ones)
     last_two_tags = sorted_tags[:2]
@@ -33,3 +33,4 @@ if last_two_tags:
     print("Tag Name 2:", last_two_tags[1]["name"])
 else:
     print("Failed to fetch tags. Status code:", response.status_code)
+    
