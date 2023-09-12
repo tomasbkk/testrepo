@@ -30,11 +30,11 @@ if response.status_code == 200:
     # Parse the JSON response
     tags = response.json()
 
-    # Sort tags by their creation date (using the get_tag_date function)
-    sorted_tags = sorted(tags, key=get_tag_date, reverse=True)
+    # Sort tags by their creation date in ascending order (using the get_tag_date function)
+    sorted_tags = sorted(tags, key=get_tag_date, reverse=False)
 
     # Get the last 2 tags (the most recent ones)
-    last_two_tags = sorted_tags[:2]
+    last_two_tags = sorted_tags[-2:]
 
     # Print the names of the last two tags
     for tag in last_two_tags:
@@ -42,7 +42,7 @@ if response.status_code == 200:
 
 # Set GitHub environment variables for the last two tags
 if last_two_tags:
-    os.environ["LAST_TAG"] = last_two_tags[0]["name"]
-    os.environ["SECOND_LAST_TAG"] = last_two_tags[1]["name"]
+    os.environ["LAST_TAG"] = last_two_tags[-1]["name"]
+    os.environ["SECOND_LAST_TAG"] = last_two_tags[-2]["name"]
 else:
     print("Failed to fetch tags. Status code:", response.status_code)
