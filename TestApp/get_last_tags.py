@@ -15,8 +15,8 @@ if response.status_code == 200:
     # Parse the JSON response
     tags = response.json()
 
-    # Get the last 2 tags
-    last_two_tags = tags[:2]
+    # Get the last 2 tags (which are the most recent ones)
+    last_two_tags = tags[-2:]
 
     # Print the last 2 tags
     for tag in last_two_tags:
