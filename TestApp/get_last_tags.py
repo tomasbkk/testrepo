@@ -14,39 +14,22 @@ response = requests.get(api_url)
 # Initialize variables to store the last two tags
 last_two_tags = []
 
-# Function to get the date from a tag object
-def get_tag_date(tag):
-    try:
-        # Try to get the tagger date, and if it's not available, use the committer date
-        return tag['commit']['tagger']['date']
-    except KeyError:
-        try:
-            return tag['commit']['committer']['date']
-        except KeyError:
-            return ""
-
 # Check if the request was successful
 if response.status_code == 200:
-    # Parse the JSON response
+    # Parse the JSON response and sort tags by name
     tags = response.json()
-
-    # Sort tags by their creation date (using the get_tag_date function)
-    sorted_tags = sorted(tags, key=get_tag_date, reverse=True)
+    tags.sort(key=lambda tag: tag["name"])
 
     # Get the last 2 tags (the most recent ones)
-    last_two_tags = sorted_tags[:2]
+    last_two_tags = tags[-2:]
 
-    print("tags")
-    print(tags)
-    print("sorted tags")
-    print(sorted_tags)
-    # Print the names of the last two tags
-    for tag in last_two_tags:
+    print("Tags:")
+    for tag in tags:
         print("Tag Name:", tag["name"])
 
 # Set GitHub environment variables for the last two tags
 if last_two_tags:
-    os.environ["LAST_TAG"] = last_two_tags[0]["name"]
-    os.environ["SECOND_LAST_TAG"] = last_two_tags[1]["name"]
+    os.environ["LAST_TAG"] = last_two_tags[1]["name"]
+    os.environ["SECOND_LAST_TAG"] = last_two_tags[0]["name"]
 else:
     print("Failed to fetch tags. Status code:", response.status_code)
