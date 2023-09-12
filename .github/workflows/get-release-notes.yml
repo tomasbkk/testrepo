@@ -24,3 +24,15 @@ jobs:
           branch: ${{ github.ref_name }}
       - name: Do something
         run: echo ${{ steps.notes.outputs.release-notes }}
+
+      - name: Generate release notes
+        id: generate_notes
+        run: |
+          echo "Version: 1.1.1.1" > release_notes.txt
+          echo "Date: 1/1/2023" >> release_notes.txt
+          echo ${{ steps.notes.outputs.release-notes }} >> release_notes.txt
+          
+      - name: Display release notes
+        run: |
+          echo "Release Notes:"
+          Get-Content release_notes.txt
