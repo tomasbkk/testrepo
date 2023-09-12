@@ -22,7 +22,6 @@ jobs:
       env:
         RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
       run: |
-        echo $RELEASE_VERSION
-        echo ${{ steps.vars.outputs.tag }}
-        echo ${{ github.ref_name }}
+         echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+         echo "Tag name from github.ref_name: ${{  github.ref_name }}"
 
