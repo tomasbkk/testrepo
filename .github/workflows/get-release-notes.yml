@@ -33,7 +33,7 @@ jobs:
         id: notes
         uses: RedCrafter07/release-notes-action@v1.0.0
         with:
-          tag-name: v${{ github.event.inputs.tagName }}
+          tag-name: ${{ github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref_name }}
       - name: Do something
