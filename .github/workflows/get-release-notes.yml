@@ -31,7 +31,12 @@ jobs:
           echo "Version: 1.1.1.1" > release_notes.txt
           echo "Date: 1/1/2023" >> release_notes.txt
           echo ${{ steps.notes.outputs.release-notes }} >> release_notes.txt
-          
+
+      - name: Create build artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          path: release_notes.txt
+        
       - name: Display release notes
         run: |
           Get-Content release_notes.txt
