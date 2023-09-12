@@ -3,9 +3,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  get-tags:
+  gettags:
     runs-on: windows-latest  # Use Windows Server 2019
 
+    steps:
+    
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
