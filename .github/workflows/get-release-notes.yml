@@ -11,24 +11,11 @@ jobs:
         with:
           fetch-tags: 'true'
         
-      - name: get Git tags
-        shell: cmd
-        run: git tag
-
-      - name: Get last 2 repo tags
-        shell: cmd
-        run: |
-          dir
-          git for-each-ref --count=2 --sort=-creatordate --format "%(refname:short)" refs/tags
-          ${{ github.workspace }}/TestApp/get_git_tags.bat
-      
       - name: Generate Release Notes
         id: notes
-        uses: tomasbkk/release-notes-action@add_previous_tag
+        uses: RedCrafter07/release-notes-action@v1
         with:
-          tag-name: ${{ env.REPO_TAG1 }}
-          prev-tag-name: ${{ env.REPO_TAG2 }}
+          tag-name: ${{ github.event.inputs.tag-name }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: 'master'
       - name: Do something
-        run: echo ${{ steps.notes.outputs.release-notes }}  
+        run: echo ${{ steps.notes.outputs.release-notes }}
