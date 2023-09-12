@@ -1,7 +1,12 @@
 name: Get release notes
 on:
   workflow_dispatch:
-
+    inputs:
+      tagName:
+        type: string
+        description: 'Version'
+        default: '1.0.0.1'
+        
 jobs:
   get-release-notes:
     runs-on: windows-latest
@@ -15,17 +20,26 @@ jobs:
         run: |
           echo ${{ github.ref }}
           echo ${{ github.ref_name }}
+
+      - name: Create tag
+        uses: joutvhu/create-tag@v1
+        with:
+          tag_name: v${{ github.event.inputs.tagName }}
+          on_tag_exists: update
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
       - name: Generate Release Notes
         id: notes
         uses: RedCrafter07/release-notes-action@v1.0.0
         with:
-          tag-name: ${{ github.ref }}
+          tag-name: v${{ github.event.inputs.tagName }}
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref_name }}
       - name: Do something
         run: echo ${{ steps.notes.outputs.release-notes }}
 
-      - name: Generate release notes
+      - name: Save release notes
         id: generate_notes
         run: |
           echo "Version: 1.1.1.1" > release_notes.txt
