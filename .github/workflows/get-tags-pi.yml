@@ -4,7 +4,7 @@ on:
 
 jobs:
   gettags:
-    runs-on: windows-latest  # Use Windows Server 2019
+    runs-on: ubunut-latest 
 
     steps:
   
