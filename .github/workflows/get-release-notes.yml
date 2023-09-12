@@ -15,7 +15,7 @@ jobs:
         id: notes
         uses: RedCrafter07/release-notes-action@v1
         with:
-          tag-name: ${{ github.event.inputs.tag-name }}
+          tag-name: ${{ github.ref-name }}
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Do something
         run: echo ${{ steps.notes.outputs.release-notes }}
