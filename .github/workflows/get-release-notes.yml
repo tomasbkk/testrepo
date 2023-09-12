@@ -10,12 +10,17 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-tags: 'true'
-        
+      - name: test
+        shell: cmd
+        run: |
+          echo ${{ github.ref }}
+          echo ${{ github.ref_name }}
       - name: Generate Release Notes
         id: notes
         uses: RedCrafter07/release-notes-action@v1.0.0
         with:
-          tag-name: ${{ github.ref-name }}
+          tag-name: ${{ github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref_name }}
       - name: Do something
         run: echo ${{ steps.notes.outputs.release-notes }}
