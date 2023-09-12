@@ -1,5 +1,4 @@
-name: Get Last 2 Tags
-
+name: Get Tags
 on:
   workflow_dispatch:
 
