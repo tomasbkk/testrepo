@@ -36,6 +36,7 @@ if response.status_code == 200:
     # Get the last 2 tags (the most recent ones)
     last_two_tags = sorted_tags[:2]
 
+    print(sorted_tags)
     # Print the names of the last two tags
     for tag in last_two_tags:
         print("Tag Name:", tag["name"])
