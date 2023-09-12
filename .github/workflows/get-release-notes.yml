@@ -34,5 +34,4 @@ jobs:
           
       - name: Display release notes
         run: |
-          echo "Release Notes:"
           Get-Content release_notes.txt
