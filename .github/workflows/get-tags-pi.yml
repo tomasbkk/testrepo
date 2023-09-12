@@ -15,7 +15,10 @@ jobs:
 
     - name: Install dependencies
       run: pip install requests
-
+      
+    - name: Checkout
+      uses: actions/checkout@v3
+      
     - name: Run Python script
       run: python TestApp/get_last_tags.py  # Replace with the actual script filename
 
