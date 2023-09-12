@@ -29,6 +29,11 @@ jobs:
     - name: Get last tag
       id: gittagskipnone
       uses: pavelsaman/git-nth-last-tag@v1
+
+    - name: Get release info
+      id: release_info
+      uses: revam/gh-action-get-tag-and-version@v1
+    
     - run: echo ${{ steps.gittagskipthree.outputs.tag }} # v1.2.7
     - run: echo ${{ steps.gittagskipone.outputs.tag }}   # v1.3.1
     - run: echo ${{ steps.gittagskipnone.outputs.tag }}  # v1.3.2
