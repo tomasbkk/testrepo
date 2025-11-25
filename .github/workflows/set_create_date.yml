@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Get User Project Data
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAT }}
           USERNAME: tomasbkk  # Your GitHub username
           PROJECT_NUMBER: 2  # Your user project number from the URL
         run: |
