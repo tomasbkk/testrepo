@@ -1,4 +1,4 @@
-name: Set CreatedDate in TR-1 Project
+name: Set CreatedDate in Test User Project
 on:
   issues:
     types: [opened]
@@ -6,15 +6,15 @@ jobs:
   set-created-date:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Project Data
+      - name: Get User Project Data
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          ORGANIZATION: ImSonicZePu
-          PROJECT_NUMBER: 5  # Your project number from the URL
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: tomasbkk  # Your GitHub username
+          PROJECT_NUMBER: 2  # Your user project number from the URL
         run: |
           gh api graphql -f query='
-            query($org: String!, $number: Int!) {
-              organization(login: $org){
+            query($user: String!, $number: Int!) {
+              user(login: $user){
                 projectV2(number: $number) {
                   id
                   fields(first: 20) {
@@ -27,13 +27,13 @@ jobs:
                   }
                 }
               }
-            }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
-          echo 'PROJECT_ID='$(jq '.data.organization.projectV2.id' project_data.json) >> $GITHUB_ENV
-          echo 'CREATED_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name=="CreatedDate") | .id' project_data.json) >> $GITHUB_ENV
+            }' -f user=$USERNAME -F number=$PROJECT_NUMBER > project_data.json
+          echo 'PROJECT_ID='$(jq '.data.user.projectV2.id' project_data.json) >> $GITHUB_ENV
+          echo 'CREATED_FIELD_ID='$(jq '.data.user.projectV2.fields.nodes[] | select(.name=="CreatedDate") | .id' project_data.json) >> $GITHUB_ENV
 
       - name: Add Issue to Project and Set CreatedDate
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           ISSUE_ID: ${{ github.event.issue.node_id }}
         run: |
           ITEM_ID="$(gh api graphql -f query='
