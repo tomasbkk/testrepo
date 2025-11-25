@@ -1,0 +1,53 @@
+name: Set CreatedDate in TR-1 Project
+on:
+  issues:
+    types: [opened]
+jobs:
+  set-created-date:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Project Data
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          ORGANIZATION: ImSonicZePu
+          PROJECT_NUMBER: 5  # Your project number from the URL
+        run: |
+          gh api graphql -f query='
+            query($org: String!, $number: Int!) {
+              organization(login: $org){
+                projectV2(number: $number) {
+                  id
+                  fields(first: 20) {
+                    nodes {
+                      ... on ProjectV2Field {
+                        id
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+            }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
+          echo 'PROJECT_ID='$(jq '.data.organization.projectV2.id' project_data.json) >> $GITHUB_ENV
+          echo 'CREATED_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name=="CreatedDate") | .id' project_data.json) >> $GITHUB_ENV
+
+      - name: Add Issue to Project and Set CreatedDate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_ID: ${{ github.event.issue.node_id }}
+        run: |
+          ITEM_ID="$(gh api graphql -f query='
+            mutation($project: ID!, $issue: ID!) {
+              addProjectV2ItemById(input: {projectId: $project, contentId: $issue}) {
+                item { id }
+              }
+            }' -f project=$PROJECT_ID -f issue=$ISSUE_ID --jq '.data.addProjectV2ItemById.item.id')"
+          gh api graphql -f query='
+            mutation($project: ID!, $item: ID!, $field: ID!, $date: Date!) {
+              updateProjectV2ItemFieldValue(input: {
+                projectId: $project
+                itemId: $item
+                fieldId: $field
+                value: { date: $date }
+              }) { projectV2Item { id } }
+            }' -f project=$PROJECT_ID -f item=$ITEM_ID -f field=$CREATED_FIELD_ID -f date=$(date +%Y-%m-%d) --silent
