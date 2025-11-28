@@ -1,9 +1,13 @@
 name: Bug report
-about: Create a bug report for an encountered issue.
+description: Create a bug report for an encountered issue.
 title: "[BUG] "
 type: bug
 assignees: ''
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report
   - type: textarea
     attributes:
       label: Bug Description
