@@ -140,7 +140,7 @@ jobs:
   
     - name: Create a GitHub release
       id: create_release
-      uses: tomasbkk/action-automatic-releases@claude/practical-cohen
+      uses: tomasbkk/action-automatic-releases@v1.2.2
       if: true
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -162,7 +162,7 @@ jobs:
           
     - name: Upload bundle
       if: true
-      uses: tomasbkk/action-ftp-upload@v1.0
+      uses: tomasbkk/action-ftp-upload@claude/condescending-snyder
       with:
         user: "u836597012.imsonic"
         password: "ZepuZepu311"
