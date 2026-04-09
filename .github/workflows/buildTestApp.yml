@@ -111,7 +111,7 @@ jobs:
     - name: Trim version
       if: true
       id: versionTrim
-      uses: tomasbkk/replace-string-action@claude/sleepy-rosalind
+      uses: tomasbkk/replace-string-action@v2.5.2
       with:
         pattern: '\\s+'
         string: ${{ steps.versionInfo.outputs.content }}
@@ -140,7 +140,7 @@ jobs:
   
     - name: Create a GitHub release
       id: create_release
-      uses: "marvinpinto/action-automatic-releases@v1.2.1"
+      uses: tomasbkk/action-automatic-releases@claude/practical-cohen
       if: true
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
