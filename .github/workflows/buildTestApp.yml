@@ -111,7 +111,7 @@ jobs:
         
     - name: Create build artifact
       if: true
-      uses: actions/upload-artifact@v3.1.0
+      uses: actions/upload-artifact@v7.0.0
       with:
         name: Mt.TestApp${{ steps.versionTrim.outputs.replaced }}
         path: ${{ github.workspace }}\build\Release
