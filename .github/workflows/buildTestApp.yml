@@ -96,7 +96,7 @@ jobs:
     - name: Read version information
       if: false
       id: versionInfo
-      uses: juliangruber/read-file-action@v2.0
+      uses: juliangruber/read-file-action@v1.1.8
       with:
         path: ${{ github.workspace }}\TestApp\version.txt
         
