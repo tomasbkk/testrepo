@@ -111,7 +111,7 @@ jobs:
     - name: Trim version
       if: true
       id: versionTrim
-      uses: frabert/replace-string-action@v2.4
+      uses: frabert/replace-string-action@claude/sleepy-rosalind
       with:
         pattern: '\\s+'
         string: ${{ steps.versionInfo.outputs.content }}
