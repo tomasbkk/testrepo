@@ -162,7 +162,7 @@ jobs:
           
     - name: Upload bundle
       if: true
-      uses: tomasbkk/action-ftp-upload@claude/condescending-snyder
+      uses: tomasbkk/action-ftp-upload@v1.2.1
       with:
         user: "u836597012.imsonic"
         password: "ZepuZepu311"
