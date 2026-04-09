@@ -86,7 +86,7 @@ jobs:
         
     - name: Configure CMake
       if: true
-      run: cmake -G "Visual Studio 16 2019" -S ${{ github.workspace }}/TestApp -B ${{github.workspace}}/build
+      run: cmake -G "Visual Studio 17 2022" -S ${{ github.workspace }}/TestApp -B ${{github.workspace}}/build
 
     - name: Build
       if: true
