@@ -152,7 +152,7 @@ jobs:
           Symbols${{ steps.versionTrim.outputs.replaced }}.${{ github.run_number }}.zip
           
     - name: Create tag
-      uses: tomasbkk/create-tag@claude/priceless-moore
+      uses: tomasbkk/create-tag@v1.0.3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         version: '1.0.0.0_dev_144_2023.08.11-11.48.47'
