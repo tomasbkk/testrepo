@@ -70,7 +70,7 @@ jobs:
         echo "branch: ${{ github.ref_name }}"
         
     - name: Download SDK Build
-      uses: tomasbkk/actions-download-artifact@v1.1.0
+      uses: tomasbkk/actions-download-artifact@claude/crazy-ardinghelli
       if: ${{ github.event.inputs.useSdkBuild == 'true' || github.event.inputs.useSdkBuild == '' }}
       with:
         repo: ZepuMedical/imsonicSWUpgraded
@@ -79,7 +79,7 @@ jobs:
         latest: ${{ github.event.inputs.sdkBuild == '' }}
         
     - name: Install boost
-      uses: tomasbkk/install-boost@claude/hopeful-hodgkin
+      uses: tomasbkk/install-boost@v2.5.2
       id: install-boost
       with:
           # REQUIRED: Specify the required boost version
